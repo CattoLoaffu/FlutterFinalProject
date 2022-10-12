@@ -19,8 +19,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: const Text(
-            "Game Data",
+            "Game PC Data",
           ),
           actions: [
             IconButton(
@@ -34,18 +36,32 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Consumer(
           builder: ((context, TransacProvide transacProvide, child) {
-            return ListView.builder(
-                itemCount: transacProvide.model.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Model data = transacProvide.model[index];
-                  return Card(
-                    elevation: 5,
-                    child: ListTile(
-                      title: Text(data.name),
-                      subtitle: Text(data.type),
-                    ),
-                  );
-                });
+            var len = transacProvide.model.length;
+            if (len == 0) {
+              return const Center(
+                child: Text("NO DATA"),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: transacProvide.model.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Model data = transacProvide.model[index];
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 5,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          child: FittedBox(
+                            child: Text(data.description),
+                          ),
+                        ),
+                        title: Text(data.name),
+                        subtitle: Text(data.type),
+                      ),
+                    );
+                  });
+            }
           }),
         ));
   }

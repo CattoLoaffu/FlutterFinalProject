@@ -12,6 +12,7 @@ class TransacProvide with ChangeNotifier {
   }
 
   void addModel(Model importedModel) {
-    model.add(importedModel);
+    model.insert(0, importedModel);
+    notifyListeners();
   }
 }
