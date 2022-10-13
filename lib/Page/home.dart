@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_application_4/Page/formPage.dart';
+import 'package:flutter_application_4/Page/form_edit.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/transac_provide.dart';
@@ -58,14 +57,30 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20)),
                       elevation: 5,
                       child: ListTile(
-                        leading: CircleAvatar(
-                          child: FittedBox(
-                            child: Text(data.description),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return FormEditScreen(
+                                data: data,
+                              );
+                            }));
+                          },
+                          leading: CircleAvatar(
+                            child: FittedBox(
+                              child: Text(data.description),
+                            ),
                           ),
-                        ),
-                        title: Text(data.name),
-                        subtitle: Text(data.type),
-                      ),
+                          title: Text(data.name),
+                          subtitle: Text(data.type),
+                          trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                // call provider
+                                var provider = Provider.of<TransacProvide>(
+                                    context,
+                                    listen: false);
+                                provider.deleteModel(data);
+                              })),
                     );
                   });
             }

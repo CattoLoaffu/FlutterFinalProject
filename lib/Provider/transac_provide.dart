@@ -22,4 +22,26 @@ class TransacProvide with ChangeNotifier {
     model = await db.loadData();
     notifyListeners();
   }
+
+  void updateModel(Model statement) async {
+    var db = ModelDatabase("model.db");
+    //save data
+    await db.updateData(statement);
+    //load data
+    model = await db.loadData();
+    // print("Transactions from updateTransaction() ${transactions.toString()}");
+    //notify consumer
+    notifyListeners();
+  }
+
+  void deleteModel(Model statement) async {
+    var db = ModelDatabase("model.db");
+    //save data
+    await db.deleteData(statement);
+    //load data
+    model = await db.loadData();
+    // print("Transactions from deleteTransaction() ${transactions.toString()}");
+    //notify consumer
+    notifyListeners();
+  }
 }

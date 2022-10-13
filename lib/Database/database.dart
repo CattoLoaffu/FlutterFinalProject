@@ -14,7 +14,7 @@ class ModelDatabase {
     Directory appDir = await getApplicationDocumentsDirectory();
     String dbLocation = join(appDir.path, dbName);
 
-    DatabaseFactory dbFactory = await databaseFactoryIo;
+    DatabaseFactory dbFactory = databaseFactoryIo;
     Database db = await dbFactory.openDatabase(dbLocation);
     return db;
   }
@@ -28,7 +28,10 @@ class ModelDatabase {
     var keyid = store.add(db, {
       "Name": insModel.name,
       "type": insModel.type,
-      "description": insModel.description
+      "description": insModel.description,
+      "ram": insModel.name,
+      "cpu": insModel.cpu,
+      "vga": insModel.vga
     });
     db.close();
     return keyid;
@@ -41,11 +44,47 @@ class ModelDatabase {
     var snapshot = await store.find(db);
     List<Model> modelList = [];
     for (var record in snapshot) {
+      int id = record.key;
       String name = record["Name"].toString();
       String type = record["type"].toString();
       String description = record["description"].toString();
-      modelList.add(Model(name, type, description));
+      String ram = record["ram"].toString();
+      String cpu = record["cpu"].toString();
+      String vga = record["vga"].toString();
+      modelList.add(Model(name, type, description, ram, cpu, vga));
     }
     return modelList;
+  }
+
+  Future updateData(Model statement) async {
+    //create db client obj
+    var db = await openDatabase();
+
+    //create store
+    var store = intMapStoreFactory.store("Expense");
+
+    //filter from 'title' and 'date'
+    final finder = Finder(
+        filter: Filter.and(<Filter>[
+      Filter.equals('Name', statement.name),
+      Filter.equals('type', statement.type)
+    ]));
+    var updateResult =
+        await store.update(db, statement.toMap(), finder: finder);
+    print("Update data with id $updateResult");
+    db.close();
+  }
+
+  Future deleteData(Model statement) async {
+    var db = await openDatabase();
+    var store = intMapStoreFactory.store("Expense");
+    final finder = Finder(
+        filter: Filter.and(<Filter>[
+      Filter.equals("Name", statement.name),
+      Filter.equals("type", statement.type),
+    ]));
+    var deleteResult = await store.delete(db, finder: finder);
+    print("Delete data with id $deleteResult");
+    db.close();
   }
 }

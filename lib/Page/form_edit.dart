@@ -1,17 +1,22 @@
-// ignore: file_names
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Provider/transac_provide.dart';
 import 'package:flutter_application_4/model/model.dart';
 import 'package:provider/provider.dart';
 
-class FormPage extends StatefulWidget {
-  const FormPage({Key? key}) : super(key: key);
+class FormEditScreen extends StatefulWidget {
+  final Model data;
+
+  //Controller
+
+  const FormEditScreen({Key? key, required this.data}) : super(key: key);
 
   @override
-  State<FormPage> createState() => _FormPageState();
+  State<FormEditScreen> createState() => _FormEditScreenState();
 }
 
-class _FormPageState extends State<FormPage> {
+class _FormEditScreenState extends State<FormEditScreen> {
   final formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -21,13 +26,27 @@ class _FormPageState extends State<FormPage> {
   final ramController = TextEditingController();
   final vgaController = TextEditingController();
 
+  final ButtonStyle style =
+      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.data.name.toString();
+    typeController.text = widget.data.type.toString();
+    desController.text = widget.data.description.toString();
+    cpuController.text = widget.data.cpu.toString();
+    ramController.text = widget.data.ram.toString();
+    vgaController.text = widget.data.vga.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text("Activity Form"),
+          title: const Text("Editting..."),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -151,14 +170,14 @@ class _FormPageState extends State<FormPage> {
                                 Model(name, type, des, cpu, ram, vga);
                             var provider = Provider.of<TransacProvide>(context,
                                 listen: false);
-                            provider.addModel(inputModel);
+                            provider.updateModel(inputModel);
                             Navigator.pop(context);
                           }
                         },
                         style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(color: Colors.amber)),
                         child: const Text(
-                          "Submit",
+                          "update",
                         ))
                   ],
                 )),
