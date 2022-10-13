@@ -86,13 +86,10 @@ class _FormPageState extends State<FormPage> {
                           var name = nameController.text;
                           var type = typeController.text;
                           var des = desController.text;
-
                           Model inputModel = Model(name, type, des);
-
                           var provider = Provider.of<TransacProvide>(context,
                               listen: false);
                           provider.addModel(inputModel);
-
                           Navigator.pop(context);
                         }
                       },
