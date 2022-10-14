@@ -5,8 +5,14 @@ class Model {
   String cpu;
   String ram;
   String vga;
-
-  Model(this.name, this.type, this.description, this.cpu, this.ram, this.vga);
+  Model(
+    this.name,
+    this.type,
+    this.description,
+    this.cpu,
+    this.ram,
+    this.vga,
+  );
 
   Map<String, dynamic> toMap() {
     return {
@@ -15,7 +21,7 @@ class Model {
       'description': description,
       'cpu': cpu,
       'ram': ram,
-      'vga': vga
+      'vga': vga,
     };
   }
 }

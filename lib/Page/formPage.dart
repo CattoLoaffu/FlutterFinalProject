@@ -27,7 +27,7 @@ class _FormPageState extends State<FormPage> {
         appBar: AppBar(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text("Activity Form"),
+          title: const Text("Game Submit"),
         ),
         body: SingleChildScrollView(
           child: Padding(
