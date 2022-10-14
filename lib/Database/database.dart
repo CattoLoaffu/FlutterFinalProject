@@ -29,7 +29,7 @@ class ModelDatabase {
       "Name": insModel.name,
       "type": insModel.type,
       "description": insModel.description,
-      "ram": insModel.name,
+      "ram": insModel.ram,
       "cpu": insModel.cpu,
       "vga": insModel.vga
     });
@@ -44,14 +44,13 @@ class ModelDatabase {
     var snapshot = await store.find(db);
     List<Model> modelList = [];
     for (var record in snapshot) {
-      int id = record.key;
       String name = record["Name"].toString();
       String type = record["type"].toString();
       String description = record["description"].toString();
       String ram = record["ram"].toString();
       String cpu = record["cpu"].toString();
       String vga = record["vga"].toString();
-      modelList.add(Model(name, type, description, ram, cpu, vga));
+      modelList.add(Model(name, type, description, cpu, ram, vga));
     }
     return modelList;
   }
@@ -86,5 +85,30 @@ class ModelDatabase {
     var deleteResult = await store.delete(db, finder: finder);
     print("Delete data with id $deleteResult");
     db.close();
+  }
+
+  Future<Model?> loadSingleRow(String name) async {
+    //create db client obj
+    var db = await openDatabase();
+
+    //create store
+    var store = intMapStoreFactory.store("expense");
+    var snapshot = await store.find(db,
+        finder: Finder(filter: Filter.equals("Name", name)));
+    Model? model;
+    for (var record in snapshot) {
+      // print(record['title'].runtimeType);
+      // print(record['amount'].runtimeType);
+      // print(record['date'].runtimeType);
+      String name = record["Name"].toString();
+      String type = record["type"].toString();
+      String description = record["description"].toString();
+      String cpu = record["cpu"].toString();
+      String ram = record["ram"].toString();
+      String vga = record["vga"].toString();
+      model = Model(name, type, description, ram, cpu, vga);
+    }
+    db.close();
+    return model;
   }
 }

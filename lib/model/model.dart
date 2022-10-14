@@ -2,8 +2,8 @@ class Model {
   String name;
   String type;
   String description;
-  String ram;
   String cpu;
+  String ram;
   String vga;
 
   Model(this.name, this.type, this.description, this.cpu, this.ram, this.vga);
@@ -13,8 +13,8 @@ class Model {
       'name': name,
       'type': type,
       'description': description,
-      'ram': ram,
       'cpu': cpu,
+      'ram': ram,
       'vga': vga
     };
   }

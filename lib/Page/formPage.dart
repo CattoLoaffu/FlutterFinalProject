@@ -74,7 +74,7 @@ class _FormPageState extends State<FormPage> {
                       controller: desController,
                       validator: (String? str) {
                         if (str!.isEmpty) {
-                          return "Please inform a Description";
+                          return "Please inform";
                         }
                         return null;
                       },
@@ -91,7 +91,7 @@ class _FormPageState extends State<FormPage> {
                       controller: cpuController,
                       validator: (String? str) {
                         if (str!.isEmpty) {
-                          return "Please inform a Description";
+                          return "Please inform";
                         }
                         return null;
                       },
@@ -144,9 +144,9 @@ class _FormPageState extends State<FormPage> {
                             var name = nameController.text;
                             var type = typeController.text;
                             var des = desController.text;
-                            var cpu = desController.text;
-                            var ram = desController.text;
-                            var vga = desController.text;
+                            var cpu = cpuController.text;
+                            var ram = ramController.text;
+                            var vga = vgaController.text;
                             Model inputModel =
                                 Model(name, type, des, cpu, ram, vga);
                             var provider = Provider.of<TransacProvide>(context,

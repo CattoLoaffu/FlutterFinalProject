@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Page/dataInfo.dart';
 import 'package:flutter_application_4/Page/formPage.dart';
 import 'package:flutter_application_4/Page/form_edit.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return FormEditScreen(
+                              return FormDataScreen(
                                 data: data,
                               );
                             }));
